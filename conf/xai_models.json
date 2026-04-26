@@ -152,6 +152,26 @@
       "supports_images": true,
       "supports_temperature": true,
       "max_image_size_mb": 20.0
+    },
+    {
+      "model_name": "grok-420-multi-agent",
+      "friendly_name": "X.AI (Grok 420 Multi-Agent, Early Access)",
+      "aliases": [
+        "grok-420-ma",
+        "grok-420-multi-agent-beta"
+      ],
+      "intelligence_score": 19,
+      "description": "GROK-420 Multi-Agent (2M context, early access) - Beta variant of the multi-agent system, available to xAI accounts with early-access entitlement",
+      "context_window": 2000000,
+      "max_output_tokens": 2000000,
+      "supports_extended_thinking": true,
+      "supports_system_prompts": true,
+      "supports_streaming": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_images": true,
+      "supports_temperature": true,
+      "max_image_size_mb": 20.0
     }
   ]
 }

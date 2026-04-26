@@ -156,6 +156,21 @@ class TestXAIProvider:
         assert provider._resolve_model_name("grok-4.20-non-reasoning") == "grok-4-20-non-reasoning"
         assert provider._resolve_model_name("grok-4.20-multi-agent") == "grok-4-20-multi-agent"
 
+    def test_get_capabilities_grok_420_multi_agent_beta(self):
+        """Grok 420 (no dot) Multi-Agent early-access variant is distinct from Grok 4.20 Multi-Agent."""
+        provider = XAIModelProvider("test-key")
+
+        capabilities = provider.get_capabilities("grok-420-multi-agent")
+        assert capabilities.model_name == "grok-420-multi-agent"
+        assert capabilities.context_window == 2_000_000
+        assert capabilities.supports_extended_thinking is True
+        assert capabilities.supports_function_calling is True
+        assert capabilities.supports_images is True
+
+        # Distinct from grok-4-20-multi-agent
+        assert provider._resolve_model_name("grok-420-ma") == "grok-420-multi-agent"
+        assert provider._resolve_model_name("grok-4.20-multi-agent") == "grok-4-20-multi-agent"
+
     def test_get_capabilities_with_shorthand(self):
         """Test getting model capabilities with shorthand."""
         provider = XAIModelProvider("test-key")
