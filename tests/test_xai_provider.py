@@ -112,6 +112,50 @@ class TestXAIProvider:
         assert capabilities.supports_json_mode is True
         assert capabilities.supports_images is True
 
+    def test_get_capabilities_grok_4_20_reasoning(self):
+        """Test capabilities for GROK-4.20 Reasoning."""
+        provider = XAIModelProvider("test-key")
+
+        capabilities = provider.get_capabilities("grok-4.20-reasoning")
+        assert capabilities.model_name == "grok-4-20-reasoning"
+        assert capabilities.friendly_name == "X.AI (Grok 4.20 Reasoning)"
+        assert capabilities.context_window == 2_000_000
+        assert capabilities.supports_extended_thinking is True
+        assert capabilities.supports_function_calling is True
+        assert capabilities.supports_json_mode is True
+        assert capabilities.supports_images is True
+
+    def test_get_capabilities_grok_4_20_non_reasoning(self):
+        """Test capabilities for GROK-4.20 Non-Reasoning."""
+        provider = XAIModelProvider("test-key")
+
+        capabilities = provider.get_capabilities("grok-4.20-non-reasoning")
+        assert capabilities.model_name == "grok-4-20-non-reasoning"
+        assert capabilities.context_window == 2_000_000
+        assert capabilities.supports_extended_thinking is False
+        assert capabilities.supports_function_calling is True
+        assert capabilities.supports_images is True
+
+    def test_get_capabilities_grok_4_20_multi_agent(self):
+        """Test capabilities for GROK-4.20 Multi-Agent."""
+        provider = XAIModelProvider("test-key")
+
+        capabilities = provider.get_capabilities("grok-4.20-multi-agent")
+        assert capabilities.model_name == "grok-4-20-multi-agent"
+        assert capabilities.context_window == 2_000_000
+        assert capabilities.supports_extended_thinking is True
+        assert capabilities.supports_function_calling is True
+        assert capabilities.supports_images is True
+
+    def test_grok_4_20_alias_resolution(self):
+        """Aliases for the Grok 4.20 variants resolve to canonical model_names."""
+        provider = XAIModelProvider("test-key")
+
+        assert provider._resolve_model_name("grok-4.20-reasoning") == "grok-4-20-reasoning"
+        assert provider._resolve_model_name("grok-4.20") == "grok-4-20-reasoning"
+        assert provider._resolve_model_name("grok-4.20-non-reasoning") == "grok-4-20-non-reasoning"
+        assert provider._resolve_model_name("grok-4.20-multi-agent") == "grok-4-20-multi-agent"
+
     def test_get_capabilities_with_shorthand(self):
         """Test getting model capabilities with shorthand."""
         provider = XAIModelProvider("test-key")
