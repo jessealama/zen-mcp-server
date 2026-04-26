@@ -413,14 +413,18 @@ class TestXAIProvider:
         provider = XAIModelProvider("test-key")
 
         # Prefers PRIMARY_MODEL first
+        allowed = ["grok-4-20-reasoning", "grok-4-1-fast-reasoning", "grok-4", "grok-code-fast-1"]
+        assert provider.get_preferred_model(ToolModelCategory.EXTENDED_REASONING, allowed) == "grok-4-20-reasoning"
+
+        # Falls back to SECONDARY_MODEL when PRIMARY is unavailable
         allowed = ["grok-4-1-fast-reasoning", "grok-4", "grok-code-fast-1"]
         assert provider.get_preferred_model(ToolModelCategory.EXTENDED_REASONING, allowed) == "grok-4-1-fast-reasoning"
 
-        # Falls back to FALLBACK_MODEL
+        # Falls back to FALLBACK_MODEL when PRIMARY and SECONDARY are unavailable
         allowed = ["grok-4", "grok-code-fast-1"]
         assert provider.get_preferred_model(ToolModelCategory.EXTENDED_REASONING, allowed) == "grok-4"
 
-        # Falls back to first available if neither preferred model available
+        # Falls back to first available if no preferred model is available
         allowed = ["grok-code-fast-1", "some-other-model"]
         assert provider.get_preferred_model(ToolModelCategory.EXTENDED_REASONING, allowed) == "grok-code-fast-1"
 
@@ -431,6 +435,10 @@ class TestXAIProvider:
         provider = XAIModelProvider("test-key")
 
         # Prefers PRIMARY_MODEL first
+        allowed = ["grok-4-20-reasoning", "grok-4-1-fast-reasoning", "grok-4"]
+        assert provider.get_preferred_model(ToolModelCategory.FAST_RESPONSE, allowed) == "grok-4-20-reasoning"
+
+        # Falls back to SECONDARY_MODEL
         allowed = ["grok-4-1-fast-reasoning", "grok-4"]
         assert provider.get_preferred_model(ToolModelCategory.FAST_RESPONSE, allowed) == "grok-4-1-fast-reasoning"
 
@@ -445,6 +453,10 @@ class TestXAIProvider:
         provider = XAIModelProvider("test-key")
 
         # Prefers PRIMARY_MODEL first
+        allowed = ["grok-4-20-reasoning", "grok-4-1-fast-reasoning", "grok-4", "grok-code-fast-1"]
+        assert provider.get_preferred_model(ToolModelCategory.BALANCED, allowed) == "grok-4-20-reasoning"
+
+        # Falls back to SECONDARY_MODEL
         allowed = ["grok-4-1-fast-reasoning", "grok-4", "grok-code-fast-1"]
         assert provider.get_preferred_model(ToolModelCategory.BALANCED, allowed) == "grok-4-1-fast-reasoning"
 
