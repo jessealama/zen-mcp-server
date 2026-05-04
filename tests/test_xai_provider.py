@@ -117,7 +117,7 @@ class TestXAIProvider:
         provider = XAIModelProvider("test-key")
 
         capabilities = provider.get_capabilities("grok-4.20-reasoning")
-        assert capabilities.model_name == "grok-4-20-reasoning"
+        assert capabilities.model_name == "grok-4.20-reasoning"
         assert capabilities.friendly_name == "X.AI (Grok 4.20 Reasoning)"
         assert capabilities.context_window == 2_000_000
         assert capabilities.supports_extended_thinking is True
@@ -130,7 +130,7 @@ class TestXAIProvider:
         provider = XAIModelProvider("test-key")
 
         capabilities = provider.get_capabilities("grok-4.20-non-reasoning")
-        assert capabilities.model_name == "grok-4-20-non-reasoning"
+        assert capabilities.model_name == "grok-4.20-non-reasoning"
         assert capabilities.context_window == 2_000_000
         assert capabilities.supports_extended_thinking is False
         assert capabilities.supports_function_calling is True
@@ -141,7 +141,7 @@ class TestXAIProvider:
         provider = XAIModelProvider("test-key")
 
         capabilities = provider.get_capabilities("grok-4.20-multi-agent")
-        assert capabilities.model_name == "grok-4-20-multi-agent"
+        assert capabilities.model_name == "grok-4.20-multi-agent"
         assert capabilities.context_window == 2_000_000
         assert capabilities.supports_extended_thinking is True
         assert capabilities.supports_function_calling is True
@@ -151,10 +151,27 @@ class TestXAIProvider:
         """Aliases for the Grok 4.20 variants resolve to canonical model_names."""
         provider = XAIModelProvider("test-key")
 
-        assert provider._resolve_model_name("grok-4.20-reasoning") == "grok-4-20-reasoning"
-        assert provider._resolve_model_name("grok-4.20") == "grok-4-20-reasoning"
-        assert provider._resolve_model_name("grok-4.20-non-reasoning") == "grok-4-20-non-reasoning"
-        assert provider._resolve_model_name("grok-4.20-multi-agent") == "grok-4-20-multi-agent"
+        assert provider._resolve_model_name("grok-4-20-reasoning") == "grok-4.20-reasoning"
+        assert provider._resolve_model_name("grok-4.20") == "grok-4.20-reasoning"
+        assert provider._resolve_model_name("grok-4.20-non-reasoning") == "grok-4.20-non-reasoning"
+        assert provider._resolve_model_name("grok-4.20-multi-agent") == "grok-4.20-multi-agent"
+
+    def test_get_capabilities_grok_4_3(self):
+        """Test capabilities for GROK-4.3 (current default flagship)."""
+        provider = XAIModelProvider("test-key")
+
+        capabilities = provider.get_capabilities("grok-4.3")
+        assert capabilities.model_name == "grok-4.3"
+        assert capabilities.friendly_name == "X.AI (Grok 4.3)"
+        assert capabilities.context_window == 2_000_000
+        assert capabilities.supports_extended_thinking is True
+        assert capabilities.supports_function_calling is True
+        assert capabilities.supports_json_mode is True
+        assert capabilities.supports_images is True
+
+        # Aliases resolve to canonical model name
+        assert provider._resolve_model_name("grok-4-3") == "grok-4.3"
+        assert provider._resolve_model_name("grok-4.3-latest") == "grok-4.3"
 
     def test_get_capabilities_grok_420_multi_agent_beta(self):
         """Grok 420 (no dot) Multi-Agent early-access variant is distinct from Grok 4.20 Multi-Agent."""
@@ -167,9 +184,9 @@ class TestXAIProvider:
         assert capabilities.supports_function_calling is True
         assert capabilities.supports_images is True
 
-        # Distinct from grok-4-20-multi-agent
+        # Distinct from grok-4.20-multi-agent
         assert provider._resolve_model_name("grok-420-ma") == "grok-420-multi-agent"
-        assert provider._resolve_model_name("grok-4.20-multi-agent") == "grok-4-20-multi-agent"
+        assert provider._resolve_model_name("grok-4.20-multi-agent") == "grok-4.20-multi-agent"
 
     def test_get_capabilities_with_shorthand(self):
         """Test getting model capabilities with shorthand."""
@@ -428,8 +445,8 @@ class TestXAIProvider:
         provider = XAIModelProvider("test-key")
 
         # Prefers PRIMARY_MODEL first
-        allowed = ["grok-4-20-reasoning", "grok-4-1-fast-reasoning", "grok-4", "grok-code-fast-1"]
-        assert provider.get_preferred_model(ToolModelCategory.EXTENDED_REASONING, allowed) == "grok-4-20-reasoning"
+        allowed = ["grok-4.3", "grok-4-1-fast-reasoning", "grok-4", "grok-code-fast-1"]
+        assert provider.get_preferred_model(ToolModelCategory.EXTENDED_REASONING, allowed) == "grok-4.3"
 
         # Falls back to SECONDARY_MODEL when PRIMARY is unavailable
         allowed = ["grok-4-1-fast-reasoning", "grok-4", "grok-code-fast-1"]
@@ -450,8 +467,8 @@ class TestXAIProvider:
         provider = XAIModelProvider("test-key")
 
         # Prefers PRIMARY_MODEL first
-        allowed = ["grok-4-20-reasoning", "grok-4-1-fast-reasoning", "grok-4"]
-        assert provider.get_preferred_model(ToolModelCategory.FAST_RESPONSE, allowed) == "grok-4-20-reasoning"
+        allowed = ["grok-4.3", "grok-4-1-fast-reasoning", "grok-4"]
+        assert provider.get_preferred_model(ToolModelCategory.FAST_RESPONSE, allowed) == "grok-4.3"
 
         # Falls back to SECONDARY_MODEL
         allowed = ["grok-4-1-fast-reasoning", "grok-4"]
@@ -468,8 +485,8 @@ class TestXAIProvider:
         provider = XAIModelProvider("test-key")
 
         # Prefers PRIMARY_MODEL first
-        allowed = ["grok-4-20-reasoning", "grok-4-1-fast-reasoning", "grok-4", "grok-code-fast-1"]
-        assert provider.get_preferred_model(ToolModelCategory.BALANCED, allowed) == "grok-4-20-reasoning"
+        allowed = ["grok-4.3", "grok-4-1-fast-reasoning", "grok-4", "grok-code-fast-1"]
+        assert provider.get_preferred_model(ToolModelCategory.BALANCED, allowed) == "grok-4.3"
 
         # Falls back to SECONDARY_MODEL
         allowed = ["grok-4-1-fast-reasoning", "grok-4", "grok-code-fast-1"]

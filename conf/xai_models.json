@@ -88,12 +88,12 @@
       "supports_temperature": true
     },
     {
-      "model_name": "grok-4-20-reasoning",
+      "model_name": "grok-4.20-reasoning",
       "friendly_name": "X.AI (Grok 4.20 Reasoning)",
       "aliases": [
         "grok-4.20",
         "grok-4-20",
-        "grok-4.20-reasoning",
+        "grok-4-20-reasoning",
         "grok-4.20-reasoning-latest"
       ],
       "intelligence_score": 17,
@@ -110,10 +110,9 @@
       "max_image_size_mb": 20.0
     },
     {
-      "model_name": "grok-4-20-non-reasoning",
+      "model_name": "grok-4.20-non-reasoning",
       "friendly_name": "X.AI (Grok 4.20 Non-Reasoning)",
       "aliases": [
-        "grok-4.20-non-reasoning",
         "grok-4-20-non-reasoning",
         "grok-4.20-fast",
         "grok-4.20-non-reasoning-latest"
@@ -132,16 +131,35 @@
       "max_image_size_mb": 20.0
     },
     {
-      "model_name": "grok-4-20-multi-agent",
+      "model_name": "grok-4.20-multi-agent",
       "friendly_name": "X.AI (Grok 4.20 Multi-Agent)",
       "aliases": [
-        "grok-4.20-multi-agent",
         "grok-4-20-multi-agent",
         "grok-4.20-ma",
         "grok-4.20-multi-agent-latest"
       ],
       "intelligence_score": 18,
       "description": "GROK-4.20 Multi-Agent (2M context) - 4-agent collaborative system (Grok/Harper/Benjamin/Lucas) with cross-agent verification",
+      "context_window": 2000000,
+      "max_output_tokens": 2000000,
+      "supports_extended_thinking": true,
+      "supports_system_prompts": true,
+      "supports_streaming": true,
+      "supports_function_calling": true,
+      "supports_json_mode": true,
+      "supports_images": true,
+      "supports_temperature": true,
+      "max_image_size_mb": 20.0
+    },
+    {
+      "model_name": "grok-4.3",
+      "friendly_name": "X.AI (Grok 4.3)",
+      "aliases": [
+        "grok-4-3",
+        "grok-4.3-latest"
+      ],
+      "intelligence_score": 20,
+      "description": "GROK-4.3 (2M context) - Flagship multimodal reasoning model and current X.AI default",
       "context_window": 2000000,
       "max_output_tokens": 2000000,
       "supports_extended_thinking": true,

@@ -27,7 +27,7 @@ class XAIModelProvider(RegistryBackedProviderMixin, OpenAICompatibleProvider):
     MODEL_CAPABILITIES: ClassVar[dict[str, ModelCapabilities]] = {}
 
     # Canonical model identifiers used for category routing.
-    PRIMARY_MODEL = "grok-4-20-reasoning"
+    PRIMARY_MODEL = "grok-4.3"
     SECONDARY_MODEL = "grok-4-1-fast-reasoning"
     FALLBACK_MODEL = "grok-4"
     CODE_MODEL = "grok-code-fast-1"
